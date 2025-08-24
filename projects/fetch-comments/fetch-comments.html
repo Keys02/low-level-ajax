@@ -48,25 +48,30 @@
         let commentsList = document.getElementById("comment-list")
         let commentForm = document.querySelector('#comment-form')
 
-        let commentsLoaded = 0
+        let commentsLoaded = 5
 
+        
         let XMLHttpRequestObject = false
-
+        
         if (window.XMLHttpRequest) {
             XMLHttpRequestObject = new XMLHttpRequest()
         } else if(window.ActiveXObject) {
             XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP")
         }
+        
+        fetchComments("http://127.0.0.1:5500/projects/fetch-comments/comments.json", 5)        
 
-        function loadMoreComments(commentSource) {
+        function fetchComments(commentSource, numberOfComments) {
             XMLHttpRequestObject.open("GET", commentSource)
 
             XMLHttpRequestObject.addEventListener("readystatechange", () => {
                 if (XMLHttpRequestObject.readyState === 4 && XMLHttpRequestObject.status === 200) {
-                    if (commentsLoaded < 50) {
-                        let comments = JSON.parse(XMLHttpRequestObject.responseText)
 
-                        for (let i = commentsLoaded; i < commentsLoaded + 10; i++) {
+                    let comments = JSON.parse(XMLHttpRequestObject.responseText)
+
+                    if (commentsLoaded < 50) {
+
+                        for (let i = commentsLoaded; i < commentsLoaded + numberOfComments; i++) {
                             commentsList.innerHTML += 
                             `<li class="comment">
                                 <h5>${comments[i].name}</h5>
@@ -77,13 +82,14 @@
                 }
             })
 
-            commentsLoaded += 10
+            commentsLoaded += 5
+            console.log(commentsLoaded)
             XMLHttpRequestObject.send(null)
         }
 
         commentForm.addEventListener('submit', (event) => {
             event.preventDefault()
-            loadMoreComments("http://127.0.0.1:5500/projects/fetch-comments/comments.json")
+            fetchComments("http://127.0.0.1:5500/projects/fetch-comments/comments.json", 5)
         })
     </script>
 </body>
