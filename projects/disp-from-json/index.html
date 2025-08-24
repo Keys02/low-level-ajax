@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax at work</title>
+    <script>
+        let XMLHttpRequestObject = false;
+
+        if (window.XMLHttpRequest) {
+            XMLHttpRequestObject = new XMLHttpRequest();
+        } else if (window.AcitveXObject) {
+            XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        function fetchDataAndView(dataSource, divID) {
+            if (XMLHttpRequestObject) {
+                let obj = document.querySelector(`.${divID}`)
+                XMLHttpRequestObject.open("GET", dataSource)
+
+                XMLHttpRequestObject.addEventListener("readystatechange", function() {
+                    if (XMLHttpRequestObject.readyState === 4 && XMLHttpRequestObject.status === 200) {
+                        obj.innerHTML = XMLHttpRequestObject.responseText;
+                    }
+                })
+                XMLHttpRequestObject.send(null)
+            }
+        }
+
+        console.log(navigator.userAgent)
+    </script>
+</head>
+<body>
+    <h1>Fetching data with Ajax</h1>
+
+    <form>
+        <input type="button" value="Display Message" onClick="fetchDataAndView('http://127.0.0.1:5500/projects/disp-from-json/data-json.json', 'render-here')">
+    </form>
+
+    <div id="targetDiv">
+        <p class="render-here">The fetched data will go here.</p>
+    </div>
+    
+</body>
+</html>
