@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: poppins, Helvetica, sans-serif;
+        }
+
+        .load-comments-btn {
+            border: none;
+            background-color: yellow;
+            padding: 5px;
+            border: 2px solid black;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .load-comments-btn:hover {
+            background-color: rgb(216, 216, 3);
+        }
+
+        #comments {
+            list-style-type: none
+        }
+    </style>
+</head>
+<body>
+    <ul id="comments">
+    </ul>
+    <form>
+        <input type="submit" class="load-comments-btn" value="Load more comments">
+    </form>
+    <script>
+        let comments = document.getElementById("comments")
+        let loadCommentBtn = document.query('.load-comments-btn')
+
+        function getXMLHttpRequestObject() {
+            let XMLHttpRequest = false
+
+            if (window.XMLHttpRequest) {
+                XMLHttpRequest = new XMLHttpRequest()
+            } else if(window.ActiveXObject) {
+                XMLHttpRequest = new ActiveXObject("Microsoft.XMLHTTP")
+            }
+
+            return XMLHttpRequest
+        }
+
+        function loadMoreComments(commentSource, numberOfComments) {
+            XMLHttpRequestObject = getXMLHttpRequetObject.open("GET", commentSource)
+
+            XMLHttpRequestObject.addEventListener("readystatechange", function() {
+                if (XMLRequestObject.readState === 4 && XMLHttpRequestObject.status === 200) {
+                    list = document.createElement("li")
+                    comments.innerHTML(list)
+                }
+            })
+
+            XMLHttpRequestObject.send(null)
+        }
+
+        loadCommentBtn.addEventListener('click', 'loadMoreComments')
+    </script>
+</body>
+</html>
