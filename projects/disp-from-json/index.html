@@ -43,7 +43,6 @@
 
         document.querySelector('.fetch-with-ajax').addEventListener('submit', function(event) {
             event.preventDefault()
-            // jsonData = json.parse('http://127.0.0.1:5500/projects/disp-from-json/data-json.json');
             fetchDataAndView("http://127.0.0.1:5500/projects/disp-from-json/data-json.json", 'body')
         })
     </script>
