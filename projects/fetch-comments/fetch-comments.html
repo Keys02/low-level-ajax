@@ -59,7 +59,6 @@
         function fetchComments(commentsSource, numberOfComments) {
             xhr.open("GET", commentsSource)
             commentsRendered += 5
-            console.log(commentsRendered)
             xhr.addEventListener("readystatechange", () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     commentsList.innerHTML = ""
