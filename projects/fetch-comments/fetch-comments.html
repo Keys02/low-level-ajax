@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetch-comments</title>
+    <style>
+        body {
+            font-family: poppins, Helvetica, sans-serif;
+        }
+
+        .load-comments-btn {
+            border: none;
+            background-color: yellow;
+            padding: 5px;
+            border: 2px solid black;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .load-comments-btn:hover {
+            background-color: rgb(216, 216, 3);
+        }
+
+        #comment-list {
+            list-style-type: none;
+            width: 50%
+        }
+
+        h5 {
+            margin: 0;
+        }   
+
+        .comment {
+            border: 1px solid black;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <ul id="comment-list">
+    </ul>
+    <form id="comment-form">
+        <input type="submit" class="load-comments-btn" value="Load more comments">
+    </form>
+    <script>
+        let commentsList = document.getElementById("comment-list")
+        let commentForm = document.querySelector('#comment-form')
+
+        let commentsLoaded = 0
+
+        let XMLHttpRequestObject = false
+
+        if (window.XMLHttpRequest) {
+            XMLHttpRequestObject = new XMLHttpRequest()
+        } else if(window.ActiveXObject) {
+            XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP")
+        }
+
+        function loadMoreComments(commentSource) {
+            XMLHttpRequestObject.open("GET", commentSource)
+
+            XMLHttpRequestObject.addEventListener("readystatechange", () => {
+                if (XMLHttpRequestObject.readyState === 4 && XMLHttpRequestObject.status === 200) {
+                    let comments = JSON.parse(XMLHttpRequestObject.responseText)
+                    if (commentsLoaded !== 50) {
+                        for (let i = commentsLoaded; i < commentsLoaded + 10; i++) {
+                                commentsList.innerHTML += `<li class="comment">
+                                    <h5>${comments[i].name}</h5>
+                                    <p>${comments[i].comment}</p>        
+                                    </li>`
+                        }
+                        commentsLoaded += 10
+                        console.log(commentsLoaded)
+                    }
+                }
+            })
+
+            XMLHttpRequestObject.send(null)
+        }
+
+        commentForm.addEventListener('submit', (event) => {
+            event.preventDefault()
+            loadMoreComments("http://127.0.0.1:5500/projects/fetch-comments/comments.json", 10)
+        })
+    </script>
+</body>
+</html>
