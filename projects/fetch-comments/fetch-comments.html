@@ -82,6 +82,8 @@
             xhr.send();
         }
 
+        fetchComments("http://127.0.0.1:5500/projects/fetch-comments/comments.json", 5)
+
         function fetchAndRenderComments() {
             fetchComments("http://127.0.0.1:5500/projects/fetch-comments/comments.json", 5)
         }
