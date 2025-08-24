@@ -4,18 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajax at work</title>
+
+</head>
+<body>
+    <h1>Fetching data with Ajax</h1>
+
+    <form class='fetch-with-ajax'>
+        <!-- <input type="button" value="Display Message" onClick="fetchDataAndView('http://127.0.0.1:5500/projects/disp-from-json/data-json.json', 'body')"> -->
+        <input type="submit" value="Display Message">
+    </form>
+
+    <div id="targetDiv">
+        <p class="render-here">The fetched data will go here.</p>
+    </div>
+
     <script>
         let XMLHttpRequestObject = false;
 
         if (window.XMLHttpRequest) {
             XMLHttpRequestObject = new XMLHttpRequest();
-        } else if (window.AcitveXObject) {
+        } else if (window.ActiveXObject) {
             XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
         }
 
-        function fetchDataAndView(dataSource, divID) {
+        function fetchDataAndView(dataSource, element) {
             if (XMLHttpRequestObject) {
-                let obj = document.querySelector(`.${divID}`)
+                let obj = document.querySelector(element)
                 XMLHttpRequestObject.open("GET", dataSource)
 
                 XMLHttpRequestObject.addEventListener("readystatechange", function() {
@@ -27,19 +41,11 @@
             }
         }
 
-        console.log(navigator.userAgent)
+        document.querySelector('.fetch-with-ajax').addEventListener('submit', function(event) {
+            event.preventDefault()
+            // jsonData = json.parse('http://127.0.0.1:5500/projects/disp-from-json/data-json.json');
+            fetchDataAndView("http://127.0.0.1:5500/projects/disp-from-json/data-json.json", 'body')
+        })
     </script>
-</head>
-<body>
-    <h1>Fetching data with Ajax</h1>
-
-    <form>
-        <input type="button" value="Display Message" onClick="fetchDataAndView('http://127.0.0.1:5500/projects/disp-from-json/data-json.json', 'render-here')">
-    </form>
-
-    <div id="targetDiv">
-        <p class="render-here">The fetched data will go here.</p>
-    </div>
-    
 </body>
 </html>

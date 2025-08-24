@@ -13,9 +13,9 @@
             XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
         }
 
-        function fetchDataAndView(dataSource, divID) {
+        function fetchDataAndView(dataSource, element) {
             if (XMLHttpRequestObject) {
-                let obj = document.querySelector(`.${divID}`)
+                let obj = document.querySelector(element)
                 XMLHttpRequestObject.open("GET", dataSource)
 
                 XMLHttpRequestObject.addEventListener("readystatechange", function() {
@@ -34,11 +34,11 @@
     <h1>Fetching data with Ajax</h1>
 
     <form>
-        <input type="button" value="Display Message" onClick="fetchDataAndView('http://127.0.0.1:5500/data.txt', 'text')">
+        <input type="button" value="Display Message" onClick="fetchDataAndView('http://127.0.0.1:5500/data.txt', '.render-here')">
     </form>
 
     <div id="targetDiv">
-        <p class="text">The fetched data will go here.</p>
+        <p class="render-here">The fetched data will go here.</p>
     </div>
     
 </body>
