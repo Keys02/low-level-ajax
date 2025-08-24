@@ -46,6 +46,8 @@
         let commentsList = document.getElementById("comment-list")
         let loadCommentsBtn = document.querySelector('.load-comments-btn')
 
+        let commentsRendered = 0
+
         let xhr = false
         
         if (window.XMLHttpRequest) {
@@ -56,13 +58,16 @@
 
         function fetchComments(commentsSource, numberOfComments) {
             xhr.open("GET", commentsSource)
-
+            commentsRendered += 5
+            console.log(commentsRendered)
             xhr.addEventListener("readystatechange", () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
+                    commentsList.innerHTML = ""
                     let comments = JSON.parse(xhr.responseText)
-                        for (let i = 0; i < 50; i++) {
+                        for (let i = 0; i < commentsRendered; i++) {
                             commentsList.innerHTML += 
-                            `<li class="comment">
+                            `
+                            <li class="comment">
                                 <h5>${comments[i].name}</h5>
                                 <p>${comments[i].comment}</p>        
                             </li>
@@ -71,15 +76,13 @@
                 }
             })
             xhr.send();
-
-            loadCommentsBtn.removeEventListener("click", fetchAndRender)
         }
 
-        function fetchAndRender() {
-            fetchComments("http://127.0.0.1:5500/projects/fetch-comments/comments.json", 10)
+        function fetchAndRenderComments() {
+            fetchComments("http://127.0.0.1:5500/projects/fetch-comments/comments.json", 5)
         }
 
-        loadCommentsBtn.addEventListener("click", fetchAndRender)
+        loadCommentsBtn.addEventListener("click", fetchAndRenderComments)
     </script>
 </body>
 </html>
