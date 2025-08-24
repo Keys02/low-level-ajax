@@ -32,6 +32,7 @@
         }   
 
         .comment {
+            margin-top: .5em;
             border: 1px solid black;
             padding: 10px;
         }
@@ -62,26 +63,27 @@
 
             XMLHttpRequestObject.addEventListener("readystatechange", () => {
                 if (XMLHttpRequestObject.readyState === 4 && XMLHttpRequestObject.status === 200) {
-                    let comments = JSON.parse(XMLHttpRequestObject.responseText)
-                    if (commentsLoaded !== 50) {
+                    if (commentsLoaded < 50) {
+                        let comments = JSON.parse(XMLHttpRequestObject.responseText)
+
                         for (let i = commentsLoaded; i < commentsLoaded + 10; i++) {
-                                commentsList.innerHTML += `<li class="comment">
-                                    <h5>${comments[i].name}</h5>
-                                    <p>${comments[i].comment}</p>        
-                                    </li>`
+                            commentsList.innerHTML += 
+                            `<li class="comment">
+                                <h5>${comments[i].name}</h5>
+                                <p>${comments[i].comment}</p>        
+                            </li>`
                         }
-                        commentsLoaded += 10
-                        console.log(commentsLoaded)
                     }
                 }
             })
 
+            commentsLoaded += 10
             XMLHttpRequestObject.send(null)
         }
 
         commentForm.addEventListener('submit', (event) => {
             event.preventDefault()
-            loadMoreComments("http://127.0.0.1:5500/projects/fetch-comments/comments.json", 10)
+            loadMoreComments("http://127.0.0.1:5500/projects/fetch-comments/comments.json")
         })
     </script>
 </body>
