@@ -75,6 +75,10 @@
                         }
                 }
             })
+
+            if (commentsRendered === 50) {
+                loadCommentsBtn.removeEventListener("click", fetchAndRenderComments)
+            }
             xhr.send();
         }
 
