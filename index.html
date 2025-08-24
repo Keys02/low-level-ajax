@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax at work</title>
+    <script>
+        let XMLHttpRequestObject = false;
+
+        if (window.XMLHttpRequest) {
+            XMLHttpRequestObject = new XMLHttpRequest();
+        } else if (window.AcitveXObject) {
+            XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        function getDataAndView(dataSource, divID) {
+            if (XMLHttpRequestObject) {
+                let obj = document.getElementById(divID)
+                XMLHttpRequestObject.open("GET", dataSource)
+
+                XMLHttpRequestObject.addEventListener("readystatechange", function() {
+                    if (XMLHttpRequestObject.readyState === 4 && XMLHttpRequestObject.status === 200) {
+                        obj.innerHTML = XMLHttpRequestObject.responseText;
+                    }
+                })
+                XMLHttpRequestObject.send(null)
+            }
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
