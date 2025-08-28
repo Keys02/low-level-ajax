@@ -26,6 +26,8 @@
         }
 
         ul {
+            margin: 0 2em;
+            padding: 0;
             list-style-type: none;
             
         }
@@ -35,9 +37,20 @@
             margin-bottom: 5px;
             margin-top: 5px;
         }
+
+        h1 {
+            text-align: center;    
+        }
+
+        .contact-list {
+            margin-top: .975em;
+            border: 1px solid black;
+            padding: .5em;
+        }
     </style>
 </head>
 <body>
+    <h1>Contacts</h1>
     <ul class="contacts-list"></ul>
 
     <script>
@@ -62,16 +75,25 @@
                         let contacts = JSON.parse(xhr.responseText)
                         contacts.forEach((contact) => {
                             let contactList = `
-                                <li>
+                                <li class="contact-list">
                                     <p>${contact.name}</p>
                                     <button class='contact-btn'>${contact.phone}</button>
                                 </li>
                             `
-
                             contactsList.innerHTML += contactList
                         })
 
-                        
+                        contactsBtn = document.querySelectorAll('.contact-btn')
+
+                        contactsBtn.forEach((btn) => {
+                            btn.addEventListener('click', () => {
+                                console.log('You clicked a button')
+                            })
+                        })
+                        // contactsBtn.addEventListener('click', () => {
+                        //     console.log("You clicked one of the contacts button")
+                        // })
+
                     }
                 })
             }
@@ -80,7 +102,7 @@
 
         makeContactsList()
 
-        console.log()
+        
     </script>
 </body>
 </html>
