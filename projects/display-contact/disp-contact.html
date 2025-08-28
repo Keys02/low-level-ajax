@@ -64,9 +64,62 @@
             xhr = new ActiveXObject()
         }
 
+        // (function makeList() {
+        //     fetch('./contacts.json')
+        //         .then(response => {
+        //             if (!response.ok) {
+        //                 throw new Error('You have the error ' + response.status)
+        //             }
+        //             return response.json()
+        //         })
+        //         .then(data => {
+        //             console.log(data)
+        //         })
+        //         .catch(error => {
+        //             console.log('Error fetch or passing json data ', error)
+        //         })
+        // })()
+
+        (async function makeListTwo() {
+            await fetch('./contacts.json')
+            .then(response =>  response.json()).then(contacts => {
+                contacts.forEach((contact) => {
+                let contactList = `
+                    <li class="contact-list">
+                        <p>${contact.name}</p>
+                        <button class='contact-btn'>${contact.phone.slice(0,5)}...</button>
+                    </li>
+                `
+                contactsList.innerHTML += contactList
+
+                contactBtns = document.querySelectorAll('.contact-btn')
+
+                contactBtns.forEach((btn, btnIndex) => {
+                    btn.addEventListener('click', (clickEvent) => {
+                        if (xhr) {
+                            xhr.open('GET', 'http://127.0.0.1:5500/projects/display-contact/contacts.json')
+
+                            xhr.addEventListener('readystatechange', () => {
+                                if (xhr.readyState === 4 && xhr.status === 200) {
+                                    let contacts = JSON.parse(xhr.responseText)
+                                    contacts.forEach((contact, contactIndex) => {
+                                        if (btnIndex == contactIndex) {
+                                            clickEvent.target.innerHTML = contact['phone']
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                        xhr.send()
+                    })
+                })
+                
+                })
+            })
+        })()
 
 
-        let makeContactsList = () => {
+        let revealPhone = () => {
             if (xhr) {
                 xhr.open('GET', 'http://127.0.0.1:5500/projects/display-contact/contacts.json')
 
@@ -83,11 +136,9 @@
                             contactsList.innerHTML += contactList
                         })
 
-                        contactsBtn = document.querySelectorAll('.contact-btn')
-
                         contactsBtn.forEach((btn) => {
-                            btn.addEventListener('click', () => {
-                                console.log('You clicked a button')
+                            btn.addEventListener('click', (e) => {
+                                console.log(e.target.innerHTML)
                             })
                         })
                     }
@@ -96,7 +147,7 @@
             xhr.send()
         }
 
-        makeContactsList()
+        // makeContactsList()
 
         
     </script>
