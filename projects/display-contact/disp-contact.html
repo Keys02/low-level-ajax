@@ -77,7 +77,7 @@
                             let contactList = `
                                 <li class="contact-list">
                                     <p>${contact.name}</p>
-                                    <button class='contact-btn'>${contact.phone}</button>
+                                    <button class='contact-btn'>${contact.phone.slice(0,5)}</button>
                                 </li>
                             `
                             contactsList.innerHTML += contactList
@@ -90,10 +90,6 @@
                                 console.log('You clicked a button')
                             })
                         })
-                        // contactsBtn.addEventListener('click', () => {
-                        //     console.log("You clicked one of the contacts button")
-                        // })
-
                     }
                 })
             }
