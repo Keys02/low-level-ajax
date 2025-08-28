@@ -67,7 +67,7 @@
         // Immediately invoking function
         (async function makeListTwo() {
             await fetch('./contacts.json')
-            .then(response =>  response.json()).then(contacts => {
+            .then(response => response.json()).then(contacts => {
                 contacts.forEach((contact) => {
                 let contactList = `
                     <li class="contact-list">
