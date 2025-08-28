@@ -58,20 +58,16 @@
 
                 xhr.addEventListener('readystatechange', () => {
                     if (xhr.readyState === 4 && xhr.status === 200) {
-                        let contacts = xhr.responseText
-                        contacts.forEach(contact, () => {
-                            let contact = document.createElement('li')
-                            let contactName = document.createElement('p')
-                            let contactBtn = document.createElement('button')
+                        let contacts = JSON.parse(xhr.responseText)
+                        contacts.forEach((contact) => {
+                            let contactList = `
+                                <li>
+                                    <p>${contact.name}</p>
+                                    <button class='contact-btn'>${contact.phone}</button>
+                                </li>
+                            `
 
-                            contactName.innerHTML = contact.name
-                            contactBtn.innerHTML = contact.phone
-
-                            contact.appendChild(contactName)
-                            contact.appendChild(contactBtn)
-
-                            contactsList.appendChild(contact)
-
+                            contactsList.innerHTML += contactList
                         })
 
                         
