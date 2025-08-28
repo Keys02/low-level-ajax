@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display-contact</title>
+    <style>
+        body {
+            font-family: poppins, Helvetica, sans-serif
+        }
+
+
+        .contact-btn {
+            border: none;
+            background-color: #009966;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: .875em;
+        }
+
+        .contact-btn:hover {
+            cursor: pointer;
+            background-color: #028459;
+        }
+
+        ul {
+            list-style-type: none;
+            
+        }
+
+        p {
+            font-weight: 500;
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <ul class="contacts-list"></ul>
+
+    <script>
+        let contactsList = document.querySelector('.contacts-list')
+
+        let xhr = false
+        
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest()
+        } else if(window.ActiveXObject) {
+            xhr = new ActiveXObject()
+        }
+
+
+
+        let revealPhone = (contactSource) => {
+            if (xhr) {
+                xhr.open('GET', contactSource)
+
+                xhr.addEventListener('readystatechange', () => {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        let contacts = xhr.responseText
+                        contacts.forEach(contact, () => {
+                            let contact = document.createElement('li')
+                            let contactName = document.createElement('p')
+                            let contactBtn = document.createElement('button')
+
+                            contactName.innerHTML = contact.name
+                            contactBtn.innerHTML = contact.phone
+
+                            contact.appendChild(contactName)
+                            contact.appendChild(contactBtn)
+
+                            contactsList.appendChild(contact)
+
+                        })
+
+                        
+                    }
+                })
+            }
+            xhr.send()
+        }
+
+        revealPhone('http://127.0.0.1:5500/projects/display-contact/contacts.json')
+    </script>
+</body>
+</html>
