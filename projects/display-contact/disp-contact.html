@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABC AIAAACQd1PeAAAADElEQVQI12P4//8/AAX+Av7czFnnAAAAAElFTkSuQmCC">
     <title>Display-contact</title>
     <style>
         body {
@@ -52,9 +53,9 @@
 
 
 
-        let revealPhone = (contactSource) => {
+        let makeContactsList = () => {
             if (xhr) {
-                xhr.open('GET', contactSource)
+                xhr.open('GET', 'http://127.0.0.1:5500/projects/display-contact/contacts.json')
 
                 xhr.addEventListener('readystatechange', () => {
                     if (xhr.readyState === 4 && xhr.status === 200) {
@@ -77,7 +78,9 @@
             xhr.send()
         }
 
-        revealPhone('http://127.0.0.1:5500/projects/display-contact/contacts.json')
+        makeContactsList()
+
+        console.log()
     </script>
 </body>
 </html>
