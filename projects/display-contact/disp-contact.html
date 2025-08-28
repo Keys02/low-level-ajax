@@ -64,6 +64,7 @@
             xhr = new ActiveXObject()
         }
 
+        // Immediately invoking function
         (async function makeListTwo() {
             await fetch('./contacts.json')
             .then(response =>  response.json()).then(contacts => {
@@ -76,11 +77,13 @@
                 `
                 contactsList.innerHTML += contactList
 
+                // Access all contact buttons
                 contactBtns = document.querySelectorAll('.contact-btn')
 
                 contactBtns.forEach((btn, btnIndex) => {
                     btn.addEventListener('click', (clickEvent) => {
                         if (xhr) {
+                            // Get all contacts from the server
                             xhr.open('GET', 'http://127.0.0.1:5500/projects/display-contact/contacts.json')
 
                             xhr.addEventListener('readystatechange', () => {
@@ -88,6 +91,7 @@
                                     let contacts = JSON.parse(xhr.responseText)
                                     contacts.forEach((contact, contactIndex) => {
                                         if (btnIndex == contactIndex) {
+                                            // Render full contact
                                             clickEvent.target.innerHTML = contact['phone']
                                         }
                                     })
