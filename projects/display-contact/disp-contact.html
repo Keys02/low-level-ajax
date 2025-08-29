@@ -18,6 +18,8 @@
             padding: 10px;
             border-radius: 5px;
             font-size: .875em;
+            width: 97.86px;
+            text-align: left
         }
 
         .contact-btn:hover {
@@ -72,7 +74,7 @@
                 let contactList = `
                     <li class="contact-list">
                         <p>${contact.name}</p>
-                        <button class='contact-btn'>${contact.phone.slice(0,5)}...</button>
+                        <button class='contact-btn'>${contact.phone.slice(0,5)}***</button>
                     </li>
                 `
                 contactsList.innerHTML += contactList
