@@ -4,42 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajax at work</title>
-    <script>
-        let XMLHttpRequestObject = false;
-
-        if (window.XMLHttpRequest) {
-            XMLHttpRequestObject = new XMLHttpRequest();
-        } else if (window.AcitveXObject) {
-            XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-
-        function fetchDataAndView(dataSource, element) {
-            if (XMLHttpRequestObject) {
-                let obj = document.querySelector(element)
-                XMLHttpRequestObject.open("GET", dataSource)
-
-                XMLHttpRequestObject.addEventListener("readystatechange", function() {
-                    if (XMLHttpRequestObject.readyState === 4 && XMLHttpRequestObject.status === 200) {
-                        obj.innerHTML = XMLHttpRequestObject.responseText;
-                    }
-                })
-                XMLHttpRequestObject.send(null)
-            }
-        }
-
-        console.log(navigator.userAgent)
-    </script>
 </head>
 <body>
     <h1>Fetching data with Ajax</h1>
+    <div class="data-holder">
+        <p>The fetched data will go here.</p>
+    </div>
 
     <form>
-        <input type="button" value="Display Message" onClick="fetchDataAndView('http://127.0.0.1:5500/data.txt', '.render-here')">
+        <input type="button" value="Display Message" onclick="getData('data.php')">
     </form>
+    <script>
+        const dataHolder = document.querySelector(".data-holder")
 
-    <div id="targetDiv">
-        <p class="render-here">The fetched data will go here.</p>
-    </div>
-    
+        let xhr = false
+
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest()
+        } else if (window.XActiveObject) {
+            xhr = new XActiveObject()
+        }
+
+        let getData = (dataSource) => {
+            xhr.open('GET', dataSource)
+
+            xhr.addEventListener('readystatechange', () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    dataHolder.innerHTML += `<p>${xhr.responseText}</p>`
+                }
+            })
+            xhr.send(null)
+        }
+    </script>
 </body>
 </html>
