@@ -1,3 +1,3 @@
 <?php
-    echo 'This text was fetched using Ajax';
+    echo 'What is the meaning'
 ?>

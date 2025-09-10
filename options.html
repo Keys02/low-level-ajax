@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href=""><link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABC AIAAACQd1PeAAAADElEQVQI12P4//8/AAX+Av7czFnnAAAAAElFTkSuQmCC">
+</head>
+<body>
+    <h1>Using Ajax and XML</h1>
+    <form>
+        <select size="1" id="options-list" onchange="setOption()">
+            <option>Select a scheme</option>
+        </select>
+        <input type="button" value="Use color scheme 1" onclick="getOptions1()">
+        <input type="button" value="Use color scheme 2" onclick="getOptions2()">
+    </form>
+
+    <div class="data-holder" width="100" height="100"></div>
+    <script>
+        let xhr
+
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest()
+        } else if (windows.XActiveObject) {
+            xhr = new XActiveObject()
+        }
+
+        let options      
+        let optionsList = document.querySelector('#options-list')
+       
+        let listOptions = () => { 
+            for (let i = 0; i < options.length; i++) {
+               let option = document.createElement('option')
+               option.innerHTML = options[i].innerHTML
+               optionsList.appendChild(option)
+            }
+        } 
+
+        let getOptions1 = () => {
+            xhr.open("GET", "options1.php", true)
+
+            xhr.addEventListener("readystatechange", () =>{
+            
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let xmlDocument = xhr.responseXML
+                options = xmlDocument.getElementsByTagName("option")
+                listOptions()
+            }
+           })
+
+           xhr.send(null)
+        }
+
+        getOptions1();
+
+    </script> 
+</body>
+</html>
