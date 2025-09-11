@@ -1,7 +1,7 @@
 <?php
     header("Content-type: application/xml");
 
-    $scheme = filter_input(INPUT_GET, "scheme");
+    $scheme = filter_input(INPUT_POST, "scheme");
  
     if ($scheme == "1") {
         $options = ['red', 'blue', 'green']; 

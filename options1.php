@@ -18,7 +18,6 @@
     $template .= <<<XML
     </options>
     XML;
-
     echo $template;
 ?>
 

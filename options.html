@@ -47,13 +47,12 @@
         } 
 
         let getOptions = (scheme) => {
-            let encodedUrl = encodeURI("http://localhost:8000/options.php?scheme=" + scheme)
-            xhr.open("GET", encodedUrl, true)
-
+            let encodedUrl = encodeURI("http://localhost:8000/options.php")
+            xhr.open("POST", encodedUrl, true)
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
             xhr.addEventListener("readystatechange", () =>  {
             
             if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log(xhr)
                 let xmlDocument = xhr.responseXML
                 options = xmlDocument.getElementsByTagName("option") //Returns HTML collection
                 optionsList.innerHTML = ""
@@ -61,7 +60,7 @@
             }
            })
            
-           xhr.send(null)
+           xhr.send('scheme=' + scheme)
         }
 
         let setOption = () => {
