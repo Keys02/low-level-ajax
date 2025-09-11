@@ -1,6 +1,6 @@
 <?php
 header("Content-type: text/xml");
-$options = ['black', 'white', 'orange'];
+$options = ['black', 'cyan', 'orange'];
 
 $template = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
