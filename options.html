@@ -17,6 +17,9 @@
     <form>
         <select size="1" id="options-list" onchange="setOption()">
             <option>Select color scheme</option>
+            <option>tomato</option>
+            <option>purple</option>
+            <option>green</option>
         </select>
         <input type="button" value="Use color scheme 1" onclick="getOptions('options1.php')">
         <input type="button" value="Use color scheme 2" onclick="getOptions('options2.php')">
@@ -32,7 +35,7 @@
             xhr = new XActiveObject()
         }
 
-        var options      
+        let options      
         let optionsList = document.querySelector('#options-list')
        
         let listOptions = () => { 
@@ -56,16 +59,16 @@
                 listOptions()
             }
            })
-
+           
            xhr.send(null)
         }
 
         let setOption = () => {
             let selectedOption = document.querySelector('#options-list').selectedIndex        
             let colorMeText = document.querySelector('.color-me')
-
+            let allOptions = optionsList.children;
             if (selectedOption !== 0) {
-                colorMeText.style.color = options[selectedOption].innerHTML;
+                colorMeText.style.color = allOptions[selectedOption].innerHTML;
             }
         }
     </script> 
