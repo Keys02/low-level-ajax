@@ -1,5 +1,6 @@
 <?php
 header("Content-type: text/xml");
+
 $options = ['black', 'cyan', 'orange'];
 
 $template = <<<XML

@@ -21,8 +21,8 @@
             <option>purple</option>
             <option>green</option>
         </select>
-        <input type="button" value="Use color scheme 1" onclick="getOptions('1')">
-        <input type="button" value="Use color scheme 2" onclick="getOptions('2')">
+        <input type="button" value="Use color scheme 1" onclick="getOptions('options1.php')">
+        <input type="button" value="Use color scheme 2" onclick="getOptions('options2.php')">
     </form>
 
     <div class="color-me">This is the text to be colored</div>
@@ -46,14 +46,13 @@
             }
         } 
 
-        let getOptions = (scheme) => {
-            let encodedUrl = encodeURI("http://localhost:8000/options.php?scheme=" + scheme)
-            xhr.open("GET", encodedUrl, true)
+        let getOptions = (xmlSource) => {
+
+            xhr.open("GET", xmlSource, true)
 
             xhr.addEventListener("readystatechange", () =>  {
             
             if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log(xhr)
                 let xmlDocument = xhr.responseXML
                 options = xmlDocument.getElementsByTagName("option") //Returns HTML collection
                 optionsList.innerHTML = ""
@@ -68,7 +67,6 @@
             let selectedOption = document.querySelector('#options-list').selectedIndex        
             let colorMeText = document.querySelector('.color-me')
             let allOptions = optionsList.children;
-
             if (selectedOption !== 0) {
                 colorMeText.style.color = allOptions[selectedOption].innerHTML;
             }
