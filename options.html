@@ -16,7 +16,7 @@
     <h1>Using Ajax and XML</h1>
     <form>
         <select size="1" id="options-list" onchange="setOption()">
-            <option>Select a scheme</option>
+            <option>Select color scheme</option>
         </select>
         <input type="button" value="Use color scheme 1" onclick="getOptions('options1.php')">
         <input type="button" value="Use color scheme 2" onclick="getOptions('options2.php')">
@@ -44,6 +44,7 @@
         } 
 
         let getOptions = (xmlSource) => {
+
             xhr.open("GET", xmlSource, true)
 
             xhr.addEventListener("readystatechange", () =>  {
@@ -51,6 +52,7 @@
             if (xhr.readyState === 4 && xhr.status === 200) {
                 let xmlDocument = xhr.responseXML
                 options = xmlDocument.getElementsByTagName("option") //Returns HTML collection
+                optionsList.innerHTML = ""
                 listOptions()
             }
            })
@@ -63,7 +65,7 @@
             let colorMeText = document.querySelector('.color-me')
 
             if (selectedOption !== 0) {
-                colorMeText.style.color = options[selectedOption-1].innerHTML;
+                colorMeText.style.color = options[selectedOption].innerHTML;
             }
         }
 
