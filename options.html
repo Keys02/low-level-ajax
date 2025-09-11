@@ -18,8 +18,8 @@
         <select size="1" id="options-list" onchange="setOption()">
             <option>Select a scheme</option>
         </select>
-        <input type="button" value="Use color scheme 1" onclick="getOptions1()">
-        <input type="button" value="Use color scheme 2" onclick="getOptions2()">
+        <input type="button" value="Use color scheme 1" onclick="getOptions('options1.php')">
+        <input type="button" value="Use color scheme 2" onclick="getOptions('options2.php')">
     </form>
 
     <div class="color-me">This is the text to be colored</div>
@@ -43,8 +43,8 @@
             }
         } 
 
-        let getOptions1 = () => {
-            xhr.open("GET", "options1.php", true)
+        let getOptions = (xmlSource) => {
+            xhr.open("GET", xmlSource, true)
 
             xhr.addEventListener("readystatechange", () =>  {
             
@@ -57,8 +57,6 @@
 
            xhr.send(null)
         }
-
-        getOptions1();
 
         let setOption = () => {
             let selectedOption = document.querySelector('#options-list').selectedIndex        
