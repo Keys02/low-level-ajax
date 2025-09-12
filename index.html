@@ -12,7 +12,7 @@
     </div>
 
     <form>
-        <input type="button" value="Display Message" onclick="getData('data.php')">
+        <input type="button" value="Display Message" onclick="getData('master.php')">
     </form>
     <script>
         const dataHolder = document.querySelector(".data-holder")
@@ -25,16 +25,25 @@
             xhr = new XActiveObject()
         }
 
+        let text = "{function: 'adder',operand1: 2, operand2: 3}"
+        let jsObject;
+
         let getData = (dataSource) => {
             xhr.open('GET', dataSource)
 
             xhr.addEventListener('readystatechange', () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    dataHolder.innerHTML += `<p>${xhr.responseText}</p>`
+                    eval('jsObject = ' + text);
+                    eval(jsObject.method + '(' + jsObject.operand1 + ',' + jsObject.operand2 + ');');
                 }
             })
             xhr.send(null)
         }
+
+        let alerter = (op1, op2) => {
+            let sum = op1 + op2
+            alert(op1 + " + " + op2 + " = " + sum)
+        } 
     </script>
 </body>
 </html>
