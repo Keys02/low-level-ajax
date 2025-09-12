@@ -10,6 +10,11 @@
             font-family: poppins, Helvetica, sans-serif;
             background-color: #efefef;
         }
+
+        #target-div {
+            background-color: #ffeeaa;
+            width: 30%;
+        }
     </style> 
 </head>
 <body>
@@ -22,21 +27,40 @@
     <script>
         let xhr = false
         
-       if (window.XMLHttpRequest) {
-        xhr = new XMLHttpRequest()
-       } else if (window.XActiveObject) {
-        xhr = new XActiveObject("Microsoft.XMLHttp")
-       } 
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest()
+        } else if (window.XActiveObject) {
+            xhr = new XActiveObject("Microsoft.XMLHttp")
+        } 
+        
+        let sendRPCDone = (unusedVariable, searchTerm, arrayTerm, arrayResults, unusedArray) => {
+            let data = "<table>"
+            if (arrayResults.lenth !== 0) {
+                arrayResults.forEach((result, index) => {
+                data += `
+                    <tr>
+                        <td>
+                            <a href="https://www.google.com/search?q${arrayTerm[index]}>${arrayTerm[index]}</a>
+                        </td>
+                        <td>${arrayResults[index]}</td>
+                    </tr>
+                `  
+                })
+            }
+            data += "</table>"
+        }
 
         let getData = (dataSource) => {
             xhr.open('GET', dataSource)
 
             xhr.addEventListener('readystatechange', () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    eval(xhr.responseText)
+                    console.log(xhr)
+                    eval(xhr.responseJSON)
                     xhr.send(null)
                 }
             })
+            xhr.send(null)
         }
 
         let searchField = document.querySelector("#text-field")
@@ -46,7 +70,9 @@
             let input = event.target || event.srcElement
             
             if (event.type == "keyup") {
+                // let encodedURI = encodeURI("google.php?qu=" + input.value)
                 getData("google.php?qu=" + input.value)
+                // getData(encodedURI)
             } else {
                 let targetDiv = document.querySelector("#target-div")
                 targetDiv.innerHTML = "<div></div>" 
@@ -56,3 +82,4 @@
         searchField.addEventListener('keyup', getSuggest)
     </script>
 </body>
+                        
