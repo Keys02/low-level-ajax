@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href=""><link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABC AIAAACQd1PeAAAADElEQVQI12P4//8/AAX+Av7czFnnAAAAAElFTkSuQmCC">
+    <title>Document</title>
+</head>
+<body>
+   <h1>Choose a username</h1>
+   <label>
+    Enter your username
+    <input id="text-field" type="text" name="username" onkeyup="checkUsername(event)">
+   </label>
+   <div id="target-div"><div></div></div>
+   <script>
+        let xhr = false
+
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest()
+        } else if (window.XActiveObject()) {
+            xhr = new XActiveObject("Microsoft.XActiveObject") 
+        }
+ 
+        let getData = (dataSource) => {
+           xhr.open("GET", dataSource) 
+           
+           xhr.addEventListener("readystatechange", () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.responseText === "taken") {
+                    let targetDiv = document.querySelector("#target-div")
+                    targetDiv.innerHTML = `<div>${xhr.responseText}</div>`
+                }
+            }
+           })
+           xhr.send(null)
+        }
+
+        let checkUsername = (keyEvent) => {
+            keyEvent = keyEvent || window.event
+            let input = keyEvent.target || keyEvent.srcElement
+
+            if (keyEvent.type == "keyup") {
+                let targetDiv = document.getElementById("target-div")
+                targetDiv.innerHTML = "<div></div>"
+
+                if (input.value) {
+                    getData("login.php?username=" + input.value)
+                }
+            }
+        }
+        
+   </script> 
+</body>
+</html>
