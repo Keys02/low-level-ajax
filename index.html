@@ -12,20 +12,19 @@
     </div>
 
     <form>
-        <input type="button" value="Display Message" onclick="getData('data.txt')">
+        <input type="button" value="Display Message" onclick="getData('GET','data.txt',true)">
     </form>
     <script>
+        let getData = (requestMethod, dataSource, async) => {
+            let xhr= false
 
-        let xhr = false
+            if (window.XMLHttpRequest) {
+                xhr = new XMLHttpRequest()
+            } else if (window.XActiveObject) {
+                xhr = new XActiveObject()
+            }
 
-        if (window.XMLHttpRequest) {
-            xhr = new XMLHttpRequest()
-        } else if (window.XActiveObject) {
-            xhr = new XActiveObject()
-        }
-
-        let getData = (dataSource) => {
-            xhr.open('HEAD', dataSource, true)
+            xhr.open(requestMethod, dataSource, async)
             xhr.send()
 
             xhr.addEventListener('readystatechange', () => {

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Image Displayer</h1>
+
+   <form>
+        <input type="button" value="button1" onclick="getData('GET', 'imageName.txt', true)">
+        <input type="button" value="button2" onclick="getData('GET', 'imageName2.txt', true)">
+   </form>
+
+   <div class="image-holder">
+    <img src="image1.jpg"> 
+   </div>
+
+   <script>
+    let getData = (requestMethod, dataSource, async = true) => {
+        xhr = false
+
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest()
+        } else if (window.XActiveObject) {
+            xhr = new XActiveObject("Microsoft.XMLHTTP")
+        }
+        
+        xhr.open(requestMethod, dataSource, async)
+        xhr.send(null)
+        
+        xhr.addEventListener("readystatechange", () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let dataHolder = document.querySelector(".image-holder")
+                dataHolder.innerHTML = `<img src="${xhr.responseText}" alt="Master image keeps changing">`
+            }
+        })
+    }
+   </script> 
+</body>
+</html>
