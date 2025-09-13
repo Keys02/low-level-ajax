@@ -14,7 +14,7 @@
    </form>
 
    <div class="image-holder">
-    <img src="image1.jpg"> 
+    <img src="image1.jpg" alt="Master image keeps changing" title="Master image"> 
    </div>
 
    <script>
@@ -33,7 +33,7 @@
         xhr.addEventListener("readystatechange", () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 let dataHolder = document.querySelector(".image-holder")
-                dataHolder.innerHTML = `<img src="${xhr.responseText}" alt="Master image keeps changing">`
+                dataHolder.innerHTML = `<img src="${xhr.responseText}" alt="Master image keeps changing" title="Master image">`
             }
         })
     }
