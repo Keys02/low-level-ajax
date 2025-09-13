@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Google Live Search</title>
     <link rel="stylesheet" href=""><link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABC AIAAACQd1PeAAAADElEQVQI12P4//8/AAX+Av7czFnnAAAAAElFTkSuQmCC">
     <style>
         body {
@@ -35,7 +35,7 @@
         
         let sendRPCDone = (unusedVariable, searchTerm, arrayTerm, arrayResults, unusedArray) => {
             let data = "<table>"
-            if (arrayResults.lenth !== 0) {
+            if (arrayResults.length !== 0) {
                 arrayResults.forEach((result, index) => {
                 data += `
                     <tr>
@@ -55,11 +55,11 @@
 
             xhr.addEventListener('readystatechange', () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    console.log(xhr)
-                    eval(xhr.responseJSON)
-                    xhr.send(null)
+                    console.log(xhr.responseText)
+                    eval(xhr.responseText)
                 }
             })
+
             xhr.send(null)
         }
 
@@ -67,12 +67,11 @@
 
         let getSuggest = (event) => {
             event = event || window.event
+
             let input = event.target || event.srcElement
             
-            if (event.type == "keyup") {
-                // let encodedURI = encodeURI("google.php?qu=" + input.value)
+            if (event.type === "keyup") {
                 getData("google.php?qu=" + input.value)
-                // getData(encodedURI)
             } else {
                 let targetDiv = document.querySelector("#target-div")
                 targetDiv.innerHTML = "<div></div>" 
