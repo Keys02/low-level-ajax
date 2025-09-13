@@ -29,12 +29,18 @@
             xhr.send()
 
             xhr.addEventListener('readystatechange', () => {
-                if (xhr.readyState === 4 && xhr.status === 200) { 
-                    const dataHolder = document.querySelector(".data-holder")
-                    dataHolder.innerHTML = `<p>${xhr.getResponseHeader("date")}</p>` 
+                if (xhr.readyState === 4) { 
+                        const dataHolder = document.querySelector(".data-holder")
+                    if (xhr.status === 200) {
+                        dataHolder.innerHTML = "<p>file exists</p>"
+                    } else if (xhr.status === 404) {
+                        dataHolder.innerHTML = "<p>file does not exist</p>"
+                    }
                 }
             })
         }
     </script>
+</body>
+</html>
 </body>
 </html>
